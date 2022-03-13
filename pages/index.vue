@@ -1,83 +1,255 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
-      </v-card>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+  <div>
+    <v-card class="secondary" flat tile>
+      <v-card-text class="text-center">
+        <v-text-field
+          outlined
+          prepend-inner-icon="mdi-magnify"
+          placeholder="بحث"
+          dense
+          filled
+        ></v-text-field>
+        <v-slide-group mandatory v-model="toggle_exclusive">
+          <v-slide-item class="mr-2" v-slot="{ active, toggle }">
+            <v-btn
+              :input-value="active"
+              active-class="primary"
+              @click="toggle"
+              small
+              outlined
+              >توزيع شهرى
+            </v-btn>
+          </v-slide-item>
+          <v-slide-item class="mr-2" v-slot="{ active, toggle }">
+            <v-btn
+              :input-value="active"
+              active-class="primary"
+              @click="toggle"
+              small
+              outlined
+              >توزيع نصف سنوى
+            </v-btn>
+          </v-slide-item>
+          <v-slide-item class="mr-2" v-slot="{ active, toggle }">
+            <v-btn
+              :input-value="active"
+              active-class="primary"
+              @click="toggle"
+              small
+              outlined
+              >سنوى
+            </v-btn>
+          </v-slide-item>
+        </v-slide-group>
+      </v-card-text>
+      <v-simple-table class="secondary">
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th>إسم الشركة</th>
+              <th>التوزيع %</th>
+              <th>تاريخ التوزيع</th>
+              <th>ملاحظة</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, i) in items" :key="i">
+              <td>
+                <div
+                  class="d-flex"
+                >
+                  <img
+                    :src="item.icon"
+                    style="width: 18px; height: 18px"
+                    class="ml-2"
+                  />
+                  <div>{{ item.name }}</div>
+                </div>
+                <div class="grey--text" style="font-size: 12px; width: 140px">
+                  {{ item.subtitle }}
+                </div>
+              </td>
+              <td>
+                <v-chip label x-small style="width: 57px" :class="item.color">{{
+                  item.change
+                }}</v-chip>
+              </td>
+              <td>
+                {{ item.date }}
+              </td>
+              <td>
+                {{ item.notes }}
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </v-card>
+    <invest-make-dialog
+      v-if="makeDialog"
+      :dialog="makeDialog"
+      @close-dialog="makeDialog = false"
+    />
+  </div>
 </template>
 
 <script>
+import InvestMakeDialog from "../components/invest/InvestMakeDialog.vue";
 export default {
-  name: 'IndexPage'
-}
+  components: { InvestMakeDialog },
+  head() {
+    return {
+      script: [
+        {
+          src: "https://s3.tradingview.com/tv.js",
+        },
+      ],
+    };
+  },
+  data() {
+    return {
+      toggle_exclusive: null,
+      makeDialog: false,
+      items: [
+        {
+          icon: "/currency/1.png",
+          name: "BTC",
+          subtitle: "Bitcoin vs US Dollar ",
+          color: "red",
+          change: "0.5%",
+          date: '12/02/2022',
+          notes: 'شهرى',
+        },
+        {
+          icon: "/currency/usdc.svg",
+          name: "XAU/USD",
+          subtitle: "Gold vs US Dollar ",
+          color: "green",
+          change: "10.5%",
+          date: '12/02/2022',
+          notes: 'سنوى',
+        },
+        {
+          icon: "/currency/3.png",
+          name: "SOL",
+          subtitle: "Solana Token vs US Dollar ",
+          color: "red",
+          change: "0.5%",
+          date: '12/02/2022',
+          notes: 'نصف سنوى',
+        },
+        {
+          icon: "/currency/4.jpg",
+          name: "AAPL",
+          subtitle: "Apple inc.",
+          color: "green",
+          change: "10.5%",
+          date: '12/02/2022',
+          notes: 'نصف سنوى',
+        },
+        {
+          icon: "/currency/4.png",
+          name: "EUR/USD",
+          subtitle: "Euro vs US Dollar",
+          color: "red",
+          change: "0.5%",
+          date: '12/02/2022',
+          notes: 'شهرى',
+        },
+        {
+          icon: "/currency/eth.svg",
+          name: "ETH",
+          subtitle: "Ethereum vs US Dollar",
+          color: "green",
+          change: "10.5%",
+          date: '12/02/2022',
+          notes: 'نصف سنوى',
+        },
+        {
+          icon: "/opengraph.png",
+          name: "AMZN",
+          subtitle: "AMZN vs US Dollar",
+          color: "green",
+          change: "10.5%",
+          date: '12/02/2022',
+          notes: 'شهرى',
+        },
+        {
+          icon: "/currency/oil.jpg",
+          name: "Oil",
+          subtitle: "Oil vs US Dollar",
+          color: "red",
+          change: "0.5%",
+          date: '12/02/2022',
+          notes: 'سنوى',
+        },
+        {
+          icon: "/currency/gold.jpeg",
+          name: "Gold",
+          subtitle: "Gold vs US Dollar",
+          color: "red",
+          change: "0.5%",
+          date: '12/02/2022',
+          notes: 'نصف سنوى',
+        },
+        {
+          icon: "/currency/silver.jpg",
+          name: "Silver",
+          subtitle: "Silver vs US Dollar",
+          color: "green",
+          change: "10.5%",
+          date: '12/02/2022',
+          notes: 'سنوى',
+        },
+        {
+          icon: "/currency/fb.png",
+          name: "FB",
+          subtitle: "FB vs US Dollar",
+          color: "red",
+          change: "0.5%",
+          date: '12/02/2022',
+          notes: 'شهرى',
+        },
+        {
+          icon: "/currency/TWTR.png",
+          name: "TWTR",
+          subtitle: "TWTR vs US Dollar",
+          color: "green",
+          change: "10.5%",
+          date: '12/02/2022',
+          notes: 'نصف سنوى',
+        },
+        {
+          icon: "/currency/tesla--600.png",
+          name: "TSLA",
+          subtitle: "TSLA vs US Dollar",
+          color: "green",
+          change: "10.5%",
+          date: '12/02/2022',
+          notes: 'سنوى',
+        },
+        {
+          icon: "/currency/symbol-Ripple.jpg",
+          name: "Ripple XRP",
+          subtitle: "Ripple XRP  vs US Dollar",
+          color: "red",
+          change: "0.5%",
+          date: '12/02/2022',
+          notes: 'شهرى',
+        },
+        {
+          icon: "/currency/150x150.png",
+          name: "SPY. ETF",
+          subtitle: "SPY. ETF vs US Dollar",
+          color: "green",
+          change: "10.5%",
+          date: '12/02/2022',
+          notes: 'شهرى',
+        },
+      ],
+    };
+  },
+};
 </script>
+
+<style></style>
