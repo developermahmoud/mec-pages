@@ -48,16 +48,16 @@
             <tr>
               <th>إسم الشركة</th>
               <th>التوزيع %</th>
+              <th>مبلغ التوزيع</th>
               <th>تاريخ التوزيع</th>
+              <th>تاريخ الاستحقاق</th>
               <th>ملاحظة</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item, i) in items" :key="i">
               <td>
-                <div
-                  class="d-flex"
-                >
+                <div class="d-flex">
                   <img
                     :src="item.icon"
                     style="width: 18px; height: 18px"
@@ -75,7 +75,13 @@
                 }}</v-chip>
               </td>
               <td>
+                {{ item.amount }}
+              </td>
+              <td>
                 {{ item.date }}
+              </td>
+              <td>
+                {{ item.date_dist }}
               </td>
               <td>
                 {{ item.notes }}
@@ -117,8 +123,10 @@ export default {
           subtitle: "Bitcoin vs US Dollar ",
           color: "red",
           change: "0.5%",
-          date: '12/02/2022',
-          notes: 'شهرى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "شهرى",
+          amount: "25.",
         },
         {
           icon: "/currency/usdc.svg",
@@ -126,8 +134,10 @@ export default {
           subtitle: "Gold vs US Dollar ",
           color: "green",
           change: "10.5%",
-          date: '12/02/2022',
-          notes: 'سنوى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "سنوى",
+          amount: "87.",
         },
         {
           icon: "/currency/3.png",
@@ -135,8 +145,10 @@ export default {
           subtitle: "Solana Token vs US Dollar ",
           color: "red",
           change: "0.5%",
-          date: '12/02/2022',
-          notes: 'نصف سنوى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "نصف سنوى",
+          amount: "02.",
         },
         {
           icon: "/currency/4.jpg",
@@ -144,8 +156,10 @@ export default {
           subtitle: "Apple inc.",
           color: "green",
           change: "10.5%",
-          date: '12/02/2022',
-          notes: 'نصف سنوى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "نصف سنوى",
+          amount: "29.",
         },
         {
           icon: "/currency/4.png",
@@ -153,8 +167,10 @@ export default {
           subtitle: "Euro vs US Dollar",
           color: "red",
           change: "0.5%",
-          date: '12/02/2022',
-          notes: 'شهرى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "شهرى",
+          amount: "85.",
         },
         {
           icon: "/currency/eth.svg",
@@ -162,8 +178,10 @@ export default {
           subtitle: "Ethereum vs US Dollar",
           color: "green",
           change: "10.5%",
-          date: '12/02/2022',
-          notes: 'نصف سنوى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "نصف سنوى",
+          amount: "36.",
         },
         {
           icon: "/opengraph.png",
@@ -171,8 +189,10 @@ export default {
           subtitle: "AMZN vs US Dollar",
           color: "green",
           change: "10.5%",
-          date: '12/02/2022',
-          notes: 'شهرى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "شهرى",
+          amount: "45.",
         },
         {
           icon: "/currency/oil.jpg",
@@ -180,8 +200,10 @@ export default {
           subtitle: "Oil vs US Dollar",
           color: "red",
           change: "0.5%",
-          date: '12/02/2022',
-          notes: 'سنوى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "سنوى",
+          amount: "2.",
         },
         {
           icon: "/currency/gold.jpeg",
@@ -189,8 +211,10 @@ export default {
           subtitle: "Gold vs US Dollar",
           color: "red",
           change: "0.5%",
-          date: '12/02/2022',
-          notes: 'نصف سنوى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "نصف سنوى",
+          amount: "22.",
         },
         {
           icon: "/currency/silver.jpg",
@@ -198,8 +222,10 @@ export default {
           subtitle: "Silver vs US Dollar",
           color: "green",
           change: "10.5%",
-          date: '12/02/2022',
-          notes: 'سنوى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "سنوى",
+          amount: "25.",
         },
         {
           icon: "/currency/fb.png",
@@ -207,8 +233,10 @@ export default {
           subtitle: "FB vs US Dollar",
           color: "red",
           change: "0.5%",
-          date: '12/02/2022',
-          notes: 'شهرى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "شهرى",
+          amount: "24.",
         },
         {
           icon: "/currency/TWTR.png",
@@ -216,8 +244,10 @@ export default {
           subtitle: "TWTR vs US Dollar",
           color: "green",
           change: "10.5%",
-          date: '12/02/2022',
-          notes: 'نصف سنوى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "نصف سنوى",
+          amount: "31.",
         },
         {
           icon: "/currency/tesla--600.png",
@@ -225,8 +255,10 @@ export default {
           subtitle: "TSLA vs US Dollar",
           color: "green",
           change: "10.5%",
-          date: '12/02/2022',
-          notes: 'سنوى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "سنوى",
+          amount: "20.",
         },
         {
           icon: "/currency/symbol-Ripple.jpg",
@@ -234,8 +266,10 @@ export default {
           subtitle: "Ripple XRP  vs US Dollar",
           color: "red",
           change: "0.5%",
-          date: '12/02/2022',
-          notes: 'شهرى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          amount: "20.",
+          notes: "شهرى",
         },
         {
           icon: "/currency/150x150.png",
@@ -243,8 +277,10 @@ export default {
           subtitle: "SPY. ETF vs US Dollar",
           color: "green",
           change: "10.5%",
-          date: '12/02/2022',
-          notes: 'شهرى',
+          date: "12/02/2022",
+          date_dist: "12/02/2022",
+          notes: "شهرى",
+          amount: "25.",
         },
       ],
     };
