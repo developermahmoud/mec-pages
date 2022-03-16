@@ -27,7 +27,19 @@
               @click="toggle"
               small
               outlined
-              >توزيع نصف سنوى
+            >
+              ربع سنوى
+            </v-btn>
+          </v-slide-item>
+          <v-slide-item class="mr-2" v-slot="{ active, toggle }">
+            <v-btn
+              :input-value="active"
+              active-class="primary"
+              @click="toggle"
+              small
+              outlined
+            >
+              نصف سنوى
             </v-btn>
           </v-slide-item>
           <v-slide-item class="mr-2" v-slot="{ active, toggle }">
@@ -47,8 +59,8 @@
           <thead>
             <tr>
               <th>إسم الشركة</th>
+               <th><div style="width:50px;">مبلغ التوزيع</div></th>
               <th>التوزيع %</th>
-              <th>مبلغ التوزيع</th>
               <th>تاريخ التوزيع</th>
               <th>تاريخ الاستحقاق</th>
               <th>ملاحظة</th>
@@ -57,7 +69,11 @@
           <tbody>
             <tr v-for="(item, i) in items" :key="i">
               <td>
-                <div class="d-flex">
+                <div
+                  class="d-flex"
+                  style="cursor: pointer"
+                  @click="showDialog = true"
+                >
                   <img
                     :src="item.icon"
                     style="width: 18px; height: 18px"
@@ -70,12 +86,12 @@
                 </div>
               </td>
               <td>
+                {{ item.amount }}
+              </td>
+              <td>
                 <v-chip label x-small style="width: 57px" :class="item.color">{{
                   item.change
                 }}</v-chip>
-              </td>
-              <td>
-                {{ item.amount }}
               </td>
               <td>
                 {{ item.date }}
@@ -91,6 +107,13 @@
         </template>
       </v-simple-table>
     </v-card>
+    <v-dialog v-model="showDialog" max-width="700">
+      <v-card class="secondary">
+        <v-card-text class="pt-5">
+          <v-img src="/chart.jpeg" />
+        </v-card-text>
+      </v-card>
+    </v-dialog>
     <invest-make-dialog
       v-if="makeDialog"
       :dialog="makeDialog"
@@ -114,6 +137,7 @@ export default {
   },
   data() {
     return {
+      showDialog: false,
       toggle_exclusive: null,
       makeDialog: false,
       items: [
@@ -126,7 +150,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "شهرى",
-          amount: "25.",
+          amount: "0.25",
         },
         {
           icon: "/currency/usdc.svg",
@@ -137,7 +161,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "سنوى",
-          amount: "87.",
+          amount: "0.87",
         },
         {
           icon: "/currency/3.png",
@@ -148,7 +172,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "نصف سنوى",
-          amount: "02.",
+          amount: "0.02",
         },
         {
           icon: "/currency/4.jpg",
@@ -159,7 +183,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "نصف سنوى",
-          amount: "29.",
+          amount: "0.29",
         },
         {
           icon: "/currency/4.png",
@@ -170,7 +194,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "شهرى",
-          amount: "85.",
+          amount: "0.85",
         },
         {
           icon: "/currency/eth.svg",
@@ -181,7 +205,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "نصف سنوى",
-          amount: "36.",
+          amount: "0.36",
         },
         {
           icon: "/opengraph.png",
@@ -192,7 +216,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "شهرى",
-          amount: "45.",
+          amount: "0.45",
         },
         {
           icon: "/currency/oil.jpg",
@@ -203,7 +227,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "سنوى",
-          amount: "2.",
+          amount: "0.2",
         },
         {
           icon: "/currency/gold.jpeg",
@@ -214,7 +238,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "نصف سنوى",
-          amount: "22.",
+          amount: "0.22",
         },
         {
           icon: "/currency/silver.jpg",
@@ -225,7 +249,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "سنوى",
-          amount: "25.",
+          amount: "0.25",
         },
         {
           icon: "/currency/fb.png",
@@ -236,7 +260,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "شهرى",
-          amount: "24.",
+          amount: "0.24",
         },
         {
           icon: "/currency/TWTR.png",
@@ -247,7 +271,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "نصف سنوى",
-          amount: "31.",
+          amount: "0.31",
         },
         {
           icon: "/currency/tesla--600.png",
@@ -258,7 +282,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "سنوى",
-          amount: "20.",
+          amount: "0.20",
         },
         {
           icon: "/currency/symbol-Ripple.jpg",
@@ -268,7 +292,7 @@ export default {
           change: "0.5%",
           date: "12/02/2022",
           date_dist: "12/02/2022",
-          amount: "20.",
+          amount: "0.20",
           notes: "شهرى",
         },
         {
@@ -280,7 +304,7 @@ export default {
           date: "12/02/2022",
           date_dist: "12/02/2022",
           notes: "شهرى",
-          amount: "25.",
+          amount: "0.25",
         },
       ],
     };
