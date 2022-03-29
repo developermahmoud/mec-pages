@@ -9,10 +9,23 @@
       color="primary"
       class="secondaryBackground"
     >
-      <v-btn class="secondaryBackground"> الرئيسيه </v-btn>
-      <v-btn class="secondaryBackground"> الاسعار </v-btn>
-      <v-btn class="secondaryBackground"> التوزيعات </v-btn>
-      <v-btn class="secondaryBackground text-truncate"> التقويم<br />الشهرى</v-btn>
+      <v-btn class="secondaryBackground" link to="/">
+        <span style="font-size: 12px; line-height: 2">الرئيسية</span>
+        <img style="width: 25px" src="https://institute.mec.biz/public/assets/img/Golden-Logo.png" />
+      </v-btn>
+          <v-btn class="secondaryBackground" link to="/prices">
+        <span style="font-size: 12px; line-height: 2">الاسعار</span>
+        <v-icon size="25">fa-chart-line</v-icon>
+      </v-btn>
+
+      <v-btn class="secondaryBackground" link to="/distribution">
+        <span style="font-size: 12px; line-height: 2">التوزيعات</span>
+        <v-icon size="25">mdi-table-network</v-icon>
+      </v-btn>
+      <v-btn class="secondaryBackground" link to="/calendar">
+        <span style="font-size: 12px; line-height: 2">التقويم الشهري</span>
+        <v-icon size="25">mdi-calendar</v-icon>
+      </v-btn>
     </v-bottom-navigation>
   </div>
 </template>
