@@ -4,7 +4,7 @@
       <v-icon size="20">fa-question-circle</v-icon>
       <v-spacer></v-spacer>
       <div class="text-center">
-        <div class="primary--text">SMART  PIRTFOLIO</div>
+        <div class="primary--text">SMART  PORTFOLIO</div>
         <div style="font-size:14px;">By Money Experts</div>
        
       </div>
