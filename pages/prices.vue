@@ -1,13 +1,12 @@
 <template>
-  <div>الأسعار</div>
+  <div>
+    <iframe src="/file.pdf" height="600" width="100%"></iframe>
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-
 </style>

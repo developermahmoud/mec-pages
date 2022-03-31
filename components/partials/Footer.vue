@@ -17,7 +17,7 @@
         />
       </v-btn>
       <v-btn height="58" class="secondaryBackground" link to="/prices">
-        <span style="font-size: 12px; line-height: 2">الاسعار</span>
+        <span style="font-size: 12px; line-height: 2">الحقيبة</span>
         <v-icon size="25">fa-chart-line</v-icon>
       </v-btn>
 
