@@ -17,16 +17,6 @@
               @click="toggle"
               small
               outlined
-              >توزيع شهرى
-            </v-btn>
-          </v-slide-item>
-          <v-slide-item class="mr-2" v-slot="{ active, toggle }">
-            <v-btn
-              :input-value="active"
-              active-class="primary"
-              @click="toggle"
-              small
-              outlined
             >
               ربع سنوى
             </v-btn>
@@ -58,8 +48,10 @@
         <template v-slot:default>
           <thead>
             <tr>
-              <th>إسم الشركة</th>
-              <th> سعر الشركة</th>
+              <th>
+                <div style="width: 50px">إسم الشركة</div>
+              </th>
+              <th>سعرالشركة</th>
               <th><div style="width: 50px">مبلغ التوزيع</div></th>
               <th>التوزيع %</th>
               <th>تاريخ التوزيع</th>
