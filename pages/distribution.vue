@@ -51,7 +51,7 @@
               <th>
                 <div style="width: 50px">إسم الشركة</div>
               </th>
-              <th><div style="width: 50px">مبلغ التوزيع</div></th>
+              <th><div style="width: 80px">مبلغ التوزيع</div></th>
               <th>التوزيع %</th>
               <th>تاريخ التوزيع</th>
               <th>تاريخ الاستحقاق</th>
@@ -65,7 +65,7 @@
                   <div
                     class="d-flex"
                     style="cursor: pointer"
-                    @click="showDialog = true"
+                    @click="showStockChart(item)"
                   >
                     <v-icon small class="ml-2">mdi-information-outline</v-icon>
                     <div>{{ item.name }}</div>
@@ -75,17 +75,13 @@
                   </div>
                 </td>
                 <td>
-                  {{ item.price.amount }}
                   <v-icon @click="showDialogPrices = true" small class="ml-2"
                     >mdi-information-outline</v-icon
                   >
+                  {{ item.price.amount }}
                 </td>
                 <td>
-                  <v-chip
-                    label
-                    x-small
-                    >{{ item.price.distribution }} %</v-chip
-                  >
+                  <v-chip label small>{{ item.price.distribution.replace('%', '') }}%</v-chip>
                 </td>
                 <td>
                   {{ item.price.distribution_date }}
@@ -102,13 +98,14 @@
         </template>
       </v-simple-table>
     </v-card>
-    <v-dialog v-model="showDialog" max-width="700">
-      <v-card class="secondary">
-        <v-card-text class="pt-5">
-          <v-img src="/chart.jpeg" />
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+    <charts-dialog
+      v-if="showDialog"
+      :dialog="showDialog"
+      :stock="stock"
+      :dates="dates"
+      :series="series"
+      @close-dialog="showDialog = false"
+    />
     <v-dialog v-model="showDialogPrices" max-width="700">
       <v-card class="secondary">
         <v-card-text class="pt-5">
@@ -125,9 +122,10 @@
 </template>
 
 <script>
+import ChartsDialog from "../components/charts/ChartsDialog.vue";
 import InvestMakeDialog from "../components/invest/InvestMakeDialog.vue";
 export default {
-  components: { InvestMakeDialog },
+  components: { InvestMakeDialog, ChartsDialog },
   head() {
     return {
       script: [
@@ -139,7 +137,10 @@ export default {
   },
   data() {
     return {
+      stock: {},
       stocks: [],
+      dates: [],
+      series: [],
       isLoading: true,
       showDialogPrices: false,
       showDialog: false,
@@ -151,6 +152,20 @@ export default {
     this.getStocks();
   },
   methods: {
+    async showStockChart(item) {
+      this.stock = item;
+      this.dates = [];
+      this.series = [];
+      let i = 0;
+      await this.$axios.$get(`frontend/stocks/${item.id}`).then((response) => {
+        response.prices.map((item) => {
+          this.dates.push(item.distribution_date);
+            this.series.push(item.distribution.replace('%', ''));
+          i++;
+        });
+        this.showDialog = true;
+      });
+    },
     async getStocks() {
       this.isLoading = true;
       await this.$axios.$get(`frontend/stocks`).then((response) => {
